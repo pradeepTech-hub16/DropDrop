@@ -1,0 +1,6 @@
+# Normalise line endings so Windows and Linux/macOS checkouts produce identical diffs.
+* text=auto
+
+*.png binary
+*.ico binary
+*.vsix binary

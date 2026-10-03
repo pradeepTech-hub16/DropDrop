@@ -1,0 +1,176 @@
+{
+  "name": "dropdrop",
+  "displayName": "DropDrop",
+  "version": "0.1.0",
+  "description": "Drop it. Share it. Sync it. Real-time shared text and code rooms in VS Code, no login required.",
+  "publisher": "dropdrop",
+  "license": "MIT",
+  "private": false,
+  "icon": "images/icon.png",
+  "keywords": [
+    "collaboration",
+    "real-time",
+    "shared",
+    "notes",
+    "snippets",
+    "yjs",
+    "pair programming"
+  ],
+  "categories": [
+    "Other",
+    "Education"
+  ],
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "main": "./dist/extension.js",
+  "activationEvents": [],
+  "contributes": {
+    "commands": [
+      {
+        "command": "dropdrop.open",
+        "title": "Open DropDrop",
+        "category": "DropDrop",
+        "icon": "$(droplet)"
+      },
+      {
+        "command": "dropdrop.joinRoom",
+        "title": "Join Room",
+        "category": "DropDrop",
+        "icon": "$(sign-in)"
+      },
+      {
+        "command": "dropdrop.createRoom",
+        "title": "Create Room",
+        "category": "DropDrop",
+        "icon": "$(add)"
+      },
+      {
+        "command": "dropdrop.leaveRoom",
+        "title": "Leave Room",
+        "category": "DropDrop",
+        "icon": "$(sign-out)"
+      },
+      {
+        "command": "dropdrop.copyRoomLink",
+        "title": "Copy Room Link",
+        "category": "DropDrop",
+        "icon": "$(link)"
+      },
+      {
+        "command": "dropdrop.openSettings",
+        "title": "Open Server Settings",
+        "category": "DropDrop"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "dropdrop.leaveRoom",
+          "when": "dropdrop.inRoom"
+        },
+        {
+          "command": "dropdrop.copyRoomLink",
+          "when": "dropdrop.inRoom"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "dropdrop.createRoom",
+          "when": "view == dropdrop.home",
+          "group": "navigation@1"
+        },
+        {
+          "command": "dropdrop.joinRoom",
+          "when": "view == dropdrop.home",
+          "group": "navigation@2"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "dropdrop",
+          "title": "DropDrop",
+          "icon": "media/dropdrop-activity.svg"
+        }
+      ]
+    },
+    "views": {
+      "dropdrop": [
+        {
+          "type": "webview",
+          "id": "dropdrop.home",
+          "name": "Rooms"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "DropDrop",
+      "properties": {
+        "dropdrop.apiUrl": {
+          "type": "string",
+          "default": "http://localhost:5000",
+          "markdownDescription": "Base URL of the DropDrop REST API, e.g. `https://api.example.com`. Must start with `http://` or `https://`. Use `https://` for any server on the internet."
+        },
+        "dropdrop.websocketUrl": {
+          "type": "string",
+          "default": "ws://localhost:5000",
+          "markdownDescription": "WebSocket address of the DropDrop collaboration server, e.g. `wss://api.example.com`. Must start with `ws://` or `wss://`; `/ws` is added automatically. Leave empty to derive it from `dropdrop.apiUrl`. Use `wss://` for any server on the internet."
+        },
+        "dropdrop.publicAppUrl": {
+          "type": "string",
+          "default": "http://localhost:5173",
+          "markdownDescription": "Public address of the DropDrop website, used by **Copy Room Link**, e.g. `https://your-dropdrop.vercel.app`."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "build": "node esbuild.mjs",
+    "watch": "node esbuild.mjs --watch",
+    "build:tests": "node esbuild.mjs --tests",
+    "test:unit": "node esbuild.mjs --tests && node --test --test-concurrency=1 --test-timeout=60000 out/test/unit/*.test.js",
+    "test:vscode": "node esbuild.mjs --tests && node out/test/runVscode.js",
+    "vscode:prepublish": "npm run typecheck && node esbuild.mjs --production",
+    "package": "vsce package --no-dependencies --allow-missing-repository"
+  },
+  "dependencies": {
+    "lib0": "^0.2.119",
+    "ws": "^8.22.0",
+    "y-protocols": "^1.0.7",
+    "y-websocket": "^3.1.0",
+    "yjs": "^13.6.33"
+  },
+  "devDependencies": {
+    "@codemirror/commands": "^6.11.1",
+    "@codemirror/lang-cpp": "^6.0.3",
+    "@codemirror/lang-css": "^6.3.1",
+    "@codemirror/lang-go": "^6.0.1",
+    "@codemirror/lang-html": "^6.4.12",
+    "@codemirror/lang-java": "^6.0.2",
+    "@codemirror/lang-javascript": "^6.2.5",
+    "@codemirror/lang-json": "^6.0.2",
+    "@codemirror/lang-markdown": "^6.5.2",
+    "@codemirror/lang-python": "^6.2.1",
+    "@codemirror/lang-rust": "^6.0.2",
+    "@codemirror/lang-sql": "^6.10.0",
+    "@codemirror/language": "^6.12.4",
+    "@codemirror/legacy-modes": "^6.5.4",
+    "@codemirror/state": "^6.7.6",
+    "@codemirror/theme-one-dark": "^6.1.3",
+    "@codemirror/view": "^6.43.13",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^20.19.43",
+    "@types/vscode": "1.90.0",
+    "@types/ws": "^8.18.2",
+    "@vscode/test-electron": "^3.1.0",
+    "@vscode/vsce": "^4.0.0",
+    "codemirror": "^6.0.2",
+    "esbuild": "^0.28.2",
+    "mocha": "^12.0.3",
+    "typescript": "^7.0.2",
+    "y-codemirror.next": "^0.3.6"
+  }
+}

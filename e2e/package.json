@@ -1,0 +1,13 @@
+{
+  "name": "dropdrop-e2e",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Cross-platform tests: website + VS Code extension (real webview bundle) sharing rooms on the real backend",
+  "scripts": {
+    "test": "node crossplatform.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.49.0"
+  }
+}

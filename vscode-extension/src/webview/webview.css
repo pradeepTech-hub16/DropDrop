@@ -1,0 +1,57 @@
+:root {
+  --mint: #3ddc97;
+  --mint-dim: #2bb57b;
+  --bg: var(--vscode-editor-background, #1a1d21);
+  --panel: var(--vscode-sideBar-background, #22262b);
+  --line: var(--vscode-panel-border, #343a41);
+  --fg: var(--vscode-editor-foreground, #e6e9ec);
+  --muted: var(--vscode-descriptionForeground, #8b949e);
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--fg); font-family: var(--vscode-font-family, system-ui, sans-serif); font-size: 13px; }
+#app { display: flex; flex-direction: column; height: 100vh; }
+[hidden] { display: none !important; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+.bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; padding: 10px 14px; border-bottom: 1px solid var(--line); background: var(--panel); }
+.title { flex: 1; min-width: 0; }
+.room { font-family: var(--vscode-editor-font-family, monospace); font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: block; }
+.pills { display: flex; flex-wrap: wrap; gap: 6px; }
+.pill { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); border-radius: 999px; padding: 2px 10px; font-size: 12px; color: var(--muted); }
+.pill .dot { width: 8px; height: 8px; border-radius: 50%; background: #8b949e; }
+.pill.ok { color: var(--mint); } .pill.ok .dot { background: var(--mint); }
+.pill.busy { color: #f5a623; } .pill.busy .dot { background: #f5a623; animation: pulse 1.2s infinite; }
+.pill.bad { color: #f47067; } .pill.bad .dot { background: #f47067; }
+@keyframes pulse { 50% { opacity: 0.35; } }
+
+.banner { padding: 6px 14px; text-align: center; border-bottom: 1px solid var(--line); font-size: 12px; }
+.banner.err { background: rgba(244, 112, 103, 0.12); color: #f47067; }
+.banner.warn { background: rgba(245, 166, 35, 0.12); color: #f5a623; }
+button.link { background: none; border: 0; color: inherit; text-decoration: underline; cursor: pointer; padding: 0; font: inherit; }
+
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding: 8px 14px; }
+.spacer { flex: 1; }
+button, select { font: inherit; color: var(--fg); background: var(--panel); border: 1px solid var(--line); border-radius: 4px; padding: 4px 10px; cursor: pointer; }
+button:hover, select:hover { border-color: var(--mint); }
+button:focus-visible, select:focus-visible { outline: 1px solid var(--mint); outline-offset: 1px; }
+button.primary { background: var(--mint); color: #12201a; border-color: transparent; font-weight: 600; }
+button.primary:hover { background: var(--mint-dim); }
+button.danger { border-color: #f47067; color: #f47067; background: rgba(244, 112, 103, 0.1); }
+
+.editor { position: relative; flex: 1; min-height: 0; margin: 0 14px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); overflow: hidden; }
+#cm, #cm .cm-editor { height: 100%; }
+.loading { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0, 0, 0, 0.25); color: var(--muted); pointer-events: none; }
+.foot { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 4px 14px 8px; color: var(--muted); font-size: 11px; }
+#stats { font-family: var(--vscode-editor-font-family, monospace); }
+
+.toast { position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 8px); opacity: 0; pointer-events: none; background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 6px 14px; transition: all 0.2s; }
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* CodeMirror */
+.cm-editor.cm-focused { outline: none; }
+.cm-scroller { font-family: var(--vscode-editor-font-family, monospace); font-size: var(--vscode-editor-font-size, 13px); line-height: 1.6; }
+.cm-gutters { background: transparent !important; border: none !important; color: var(--muted) !important; }
+.cm-activeLine, .cm-activeLineGutter { background: rgba(127, 127, 127, 0.1) !important; }
+.cm-content { padding: 8px 0; caret-color: var(--mint); }
+.cm-cursor { border-left-color: var(--mint) !important; }

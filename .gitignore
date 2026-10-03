@@ -1,0 +1,45 @@
+# Dependencies
+node_modules/
+
+# Build output and generated artifacts
+dist/
+out/
+build/
+coverage/
+*.tsbuildinfo
+*.vsix
+
+# Secrets and local environment: NEVER commit (only the *.env.example templates are tracked)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+
+# Test downloads, caches and temporary test artifacts
+.vscode-test/
+.vscode-test-web/
+e2e/.tmp-*/
+**/.tmp-*/
+*.log
+npm-debug.log*
+.npm/
+.cache/
+
+# Local databases
+*.sqlite
+*.sqlite3
+*.db
+mongodb-data/
+data/db/
+
+# Vercel / hosting CLI state
+.vercel/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+*.swp

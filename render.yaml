@@ -1,0 +1,27 @@
+# Render.com blueprint for the BACKEND (REST API + WebSocket/Yjs server). NOT deployed, nothing purchased.
+# The frontend is deployed separately on Vercel (see DEPLOYMENT.md).
+#
+# Starts on the FREE plan so nothing is billed. The free plan sleeps after 15 minutes without inbound traffic and
+# takes about a minute to wake; change `plan` to `starter` (about $7/month at the time of writing) for an
+# always-on server. Keep exactly ONE instance: rooms are held in process memory.
+services:
+  - type: web
+    name: dropdrop-backend
+    runtime: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm ci --omit=dev
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeploy: true            # redeploys on every push to the connected branch
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NODE_ENV
+        value: production
+      - key: TRUST_PROXY
+        value: "1"              # CONFIRM after the first deploy with /api/client-ip (see DEPLOYMENT.md, section 6)
+      - key: ALLOWED_ORIGINS
+        sync: false             # your website origin, e.g. https://<your-project>.vercel.app (set in the dashboard)
+      - key: MONGODB_URI
+        sync: false             # your Atlas connection string (set in the dashboard, never commit it)
